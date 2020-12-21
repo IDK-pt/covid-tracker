@@ -1,24 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
+import ShowData from './ShowData';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="container">
+      <div className="card border-0 shadow my-5">
+        <div className="card-body p-5">
+          <h1 style={{textAlign:'center'}} className='mb-5'>Covid-19 Tracker</h1>
+          <hr></hr>
+          <ShowData/>
+        </div>
+      </div>
+    </div> 
   );
 }
 
