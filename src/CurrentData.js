@@ -12,32 +12,30 @@ function CurrentData(props){
 
     useEffect(() => {
         if (props.country !== ''){
+            async function getCountryData(){
+                const result = await fetch(`https://api.covid19api.com/total/country/${props.country}`)
+                var data = await result.json()
+                console.log(data)
+                if(data.message === 'Not Found'){
+                    
+                }else{
+                    setCountry(props.country)
+                    data = data.slice(-1)[0]
+                    const clearData = {'TotalConfirmed': data.Confirmed, "TotalDeaths":data.Deaths, "TotalRecovered":data.Recovered}
+                    setDataToShow(clearData)
+                }
+            }
             getCountryData()
         }else{
-            setCountry('World')
-            getWorldData()  
-        }
+            async function getWorldData(){
+                setCountry('World')
+                const result = await fetch('https://api.covid19api.com/world/total')
+                const data = await result.json()
+                setDataToShow(data); 
+            }
+            getWorldData()
+        }   
     }, [props.country])
-
-    async function getWorldData(){
-        const result = await fetch('https://api.covid19api.com/world/total')
-        const data = await result.json()
-        setDataToShow(data);
-    }
-
-    async function getCountryData(){
-        const result = await fetch(`https://api.covid19api.com/total/country/${props.country}`)
-        var data = await result.json()
-        console.log(data)
-        if(data.message === 'Not Found'){
-            
-        }else{
-            setCountry(props.country)
-            data = data.slice(-1)[0]
-            const clearData = {'TotalConfirmed': data.Confirmed, "TotalDeaths":data.Deaths, "TotalRecovered":data.Recovered}
-            setDataToShow(clearData)
-        }
-    }
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
